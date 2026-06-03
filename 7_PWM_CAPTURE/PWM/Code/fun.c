@@ -102,27 +102,9 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 }
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-	if(htim->Instance ==TIM16)
+	if(htim->Instance == TIM16)
 	{
 		R39_fre=HZ_1MHz/(TIM16->CCR1+1);
 		TIM16->CNT=0;
 	}
 }
-
-//// 这是 HAL 库专用的错误处理回调函数
-//void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
-//{
-//	if (huart->Instance == USART1)
-//	{
-//		// 如果进到了这里，说明硬件报错了！
-//		// 我们点亮 LED 8 来作为报警灯
-//		led_show(5, 1); 
-//	
-//		// 强行清除溢出标志，把状态机救回来，防止死锁
-//		__HAL_UART_CLEAR_OREFLAG(huart);
-//		HAL_UARTEx_ReceiveToIdle_DMA(&huart1, uart_rx_str, 30);
-//	}
-//}
-
-
-

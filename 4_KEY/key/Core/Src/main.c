@@ -81,16 +81,16 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-   LCD_Init();
-	 LCD_Clear(Black);
-	 LCD_SetTextColor(White);
-	 LCD_SetBackColor(Black);
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
+   LCD_Init();
+	 LCD_Clear(Black);
+	 LCD_SetTextColor(White);
+	 LCD_SetBackColor(Black);
   /* USER CODE END 2 */
 
   /* Infinite loop */

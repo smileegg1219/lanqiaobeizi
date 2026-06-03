@@ -12,7 +12,7 @@ void lcd_show()
 {
 	uint16_t temp=GPIOC->ODR;
 	char text[20]={'\0'};
-	sprintf(text,"    c    Orin");
+	sprintf(text,"       Orin");
 	LCD_DisplayStringLine(Line2,(uint8_t*)text);
 	GPIOC->ODR=temp;
 }

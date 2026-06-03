@@ -101,8 +101,8 @@ int main(void)
   HAL_ADCEx_Calibration_Start(&hadc2,ADC_SINGLE_ENDED);
 //HAL_UART_Receive_IT(&huart1, uart_rx_str, 1);
 	I2CInit();
-	eeprom_write(2,235);
-	eeprom_data=eeprom_read(2);
+	eeprom_write(3,9);
+	eeprom_data=eeprom_read(3);
   /* USER CODE END 2 */
 
   /* Infinite loop */

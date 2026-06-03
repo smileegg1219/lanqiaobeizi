@@ -235,7 +235,7 @@ uint8_t eeprom_read(uint8_t address){
 	I2CWaitAck();
 	
 	uint8_t data=I2CReceiveByte();
-	I2CWaitAck();
+	I2CSendNotAck();
 	I2CStop();
 	
 	return data;
