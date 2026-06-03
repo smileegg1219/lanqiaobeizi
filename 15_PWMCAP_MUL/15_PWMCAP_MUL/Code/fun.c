@@ -5,6 +5,10 @@
   double mcp_adc=0;
   double R38_adc=0;
 	uint16_t R39_fre;
+	uint16_t fre_PA7;
+	bool state1,state2;
+	uint16_t tim1[2]; //两次周期值
+	uint16_t tim2[2];
 /*--------------led显示-----------------*/
 void led_show(uint8_t wela,bool state)
 {
@@ -28,6 +32,8 @@ void lcd_show()
 	LCD_DisplayStringLine(Line5,(uint8_t*)text);
 	sprintf(text,"    R39= %dHz ",R39_fre);
 	LCD_DisplayStringLine(Line6,(uint8_t*)text);
+		sprintf(text,"    PA7= %dHz ",fre_PA7);
+	LCD_DisplayStringLine(Line7,(uint8_t*)text);
 	GPIOC->ODR=temp;
 }
 /*--------------按键-----------------*/
@@ -89,11 +95,34 @@ void loop (void)
 //	led_show(2,1);
 }
 
-
+//一个定时器，多个通道捕获，不用清零，用两个边沿值减
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim){
 	if (htim ->Instance==TIM3){
-		R39_fre=1000000/(TIM3->CCR1+1);
-		TIM3->CNT=0;
+		 if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1){
+			 if (!state1){
+					tim1[0]=TIM3->CCR1;
+		      state1=1;
+			 }
+			 else {
+				  tim1[1]=TIM3->CCR1;
+				  uint16_t diff=(tim1[1]>tim1[0])?(tim1[1]-tim1[0]):(65536-tim1[0]+tim1[1]);  //基于待测频率要大于最小能测的频率
+				 	R39_fre=1000000/diff;
+		      state1=0;
+			 }
+		 }
+		 if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2){
+			 if (!state2){
+					tim2[0]=TIM3->CCR2;
+		      state2=1;
+			 }
+			 else {
+				  tim2[1]=TIM3->CCR2;
+				  uint16_t diff=(tim2[1]>tim2[0])?(tim2[1]-tim2[0]):(65536-tim2[0]+tim2[1]);  //基于待测频率要大于最小能测的频率
+				 	fre_PA7=1000000/diff;
+		      state2=0;
+			 }
+		 }
+		 
 	}
 	
 }

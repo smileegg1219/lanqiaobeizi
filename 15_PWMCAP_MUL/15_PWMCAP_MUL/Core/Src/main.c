@@ -90,6 +90,7 @@ int main(void)
   MX_GPIO_Init();
   MX_ADC1_Init();
   MX_TIM3_Init();
+  MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
    LCD_Init();
 	 LCD_Clear(Black);
@@ -98,7 +99,8 @@ int main(void)
 	 I2CInit();
    HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
 	 HAL_TIM_IC_Start_IT(&htim3,TIM_CHANNEL_1);
-	 
+	 HAL_TIM_IC_Start_IT(&htim3,TIM_CHANNEL_2);
+	 HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
