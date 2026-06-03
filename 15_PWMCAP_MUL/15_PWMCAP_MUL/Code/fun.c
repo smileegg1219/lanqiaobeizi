@@ -4,6 +4,7 @@
 	uint8_t mcp4017_data=0;
   double mcp_adc=0;
   double R38_adc=0;
+	uint16_t R39_fre;
 /*--------------ledÏÔÊ¾-----------------*/
 void led_show(uint8_t wela,bool state)
 {
@@ -22,8 +23,10 @@ void lcd_show()
 	sprintf(text,"    MCP=%u    ",mcp4017_data);
 	LCD_DisplayStringLine(Line3,(uint8_t*)text);
 	sprintf(text,"    mcp= %.2f ",mcp_adc);
-	LCD_DisplayStringLine(Line5,(uint8_t*)text);
+	LCD_DisplayStringLine(Line4,(uint8_t*)text);
 	sprintf(text,"    R38= %.2f ",R38_adc);
+	LCD_DisplayStringLine(Line5,(uint8_t*)text);
+	sprintf(text,"    R39= %dHz ",R39_fre);
 	LCD_DisplayStringLine(Line6,(uint8_t*)text);
 	GPIOC->ODR=temp;
 }
@@ -84,4 +87,13 @@ void loop (void)
 
 //   	led_show(1,0);
 //	led_show(2,1);
+}
+
+
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim){
+	if (htim ->Instance==TIM3){
+		R39_fre=1000000/(TIM3->CCR1+1);
+		TIM3->CNT=0;
+	}
+	
 }

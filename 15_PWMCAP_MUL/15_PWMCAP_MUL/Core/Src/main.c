@@ -97,6 +97,8 @@ int main(void)
 	 LCD_SetBackColor(Black);
 	 I2CInit();
    HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+	 HAL_TIM_IC_Start_IT(&htim3,TIM_CHANNEL_1);
+	 
   /* USER CODE END 2 */
 
   /* Infinite loop */

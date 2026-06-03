@@ -7,6 +7,7 @@
 #include "stdio.h"
 #include "stdbool.h"
 #include "adc.h"
+#include "tim.h"
 
 #include "lcd.h"
 #include "i2c_hal.h"
