@@ -84,6 +84,18 @@ void adc_read(double *adc_volt1,double *adc_volt2)
 	*adc_volt2=R38_value*3.3/4095.0;
 	
 }
+
+void uart_proc(void){
+	if (!rx_flag) return ;
+	if (!strcmp(uart_rx,"wuyu")){   //0表示两个字符相同 
+			  printf("chentingrui is sb");
+	}
+	else printf("chentingrui is big sb");
+	
+	
+	rx_flag=0;
+	memset(uart_rx,'\0',sizeof uart_rx); //推荐用sizeof ，不用strlen
+}
 /*--------------循环函数-----------------*/
 void loop (void)
 {
@@ -93,13 +105,14 @@ void loop (void)
 		mcp4017_write(13);  //mcp的范围是7位，也就是0~127,电阻最大是100K
 	  mcp4017_data=mcp4017_read();
    	adc_read(&mcp_adc,&R38_adc);
-
+  
+		uart_proc();
 //   	led_show(1,0);
 //	led_show(2,1);
 }
 
 
-/*---------------------------------------循环函数----------------------------------------------*/
+/*---------------------------------------回调函数----------------------------------------------*/
 
 //一个定时器，多个通道捕获，不用清零，用两个边沿值减
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim){
@@ -140,4 +153,11 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size){
 				HAL_UARTEx_ReceiveToIdle_DMA(huart, (uint8_t *)uart_rx, RX_MUX);
 	      rx_flag=1;
 	 }
+}
+
+//串口重定向，printf中的函数fputc
+int fputc(int ch, FILE *f)
+{
+	HAL_UART_Transmit(&huart1,(uint8_t*)&ch,1,50);
+	return ch;
 }
