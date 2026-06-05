@@ -31,4 +31,5 @@ wuyu_muban/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
   ..\Core\Inc\gpio.h ..\Code\fun.h \
   D:\wuyu2\Documents\ARM\ARMCLANG\Bin\..\include\string.h \
   D:\wuyu2\Documents\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  D:\wuyu2\Documents\ARM\ARMCLANG\Bin\..\include\stdbool.h ..\Code\lcd.h
+  D:\wuyu2\Documents\ARM\ARMCLANG\Bin\..\include\stdbool.h \
+  D:\wuyu2\Documents\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Code\lcd.h

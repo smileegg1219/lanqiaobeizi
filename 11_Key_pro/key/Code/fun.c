@@ -139,7 +139,6 @@ void key_scan()
 				flag_two=0;
 			}
 	 }
-	
 
    B1_last=B1_state; B2_last=B2_state; B3_last=B3_state;B4_last=B4_state;
 	 
